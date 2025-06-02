@@ -1,12 +1,13 @@
-import Image from "next/image";
-import Welcome from "@/components/Welcome";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
     <div className="">
-      <Welcome/>
-
-      <button><a href="/about">Sobre nós</a></button>
+      <Navbar 
+      link1={{href: '/about', linkName: 'about'}}
+      link2={{href: '/server-client', linkName: 'client'}}
+      link3={{href: '/server-example', linkName: 'example'}}
+      />
     </div>
   );
 }
