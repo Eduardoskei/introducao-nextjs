@@ -39,7 +39,7 @@ export default function CreatePostPage() {
         <div className="flex items-center justify-center p-6">
             <div>
 
-                <h1 className="text-2xl font-bold mb-4">Criar novo Post</h1>
+                <h1 className="text-2xl fo''nt-bold mb-4">Criar novo Post</h1>
 
                 <form onSubmit={handleSubmit}>
                     <div>
