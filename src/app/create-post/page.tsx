@@ -2,7 +2,7 @@
 
 import React, { use, useState } from "react";
 import axios from "axios";
-import { title } from "process";
+import { Button } from "@/components/ui/button"
 
 type FormData = {
     title: string;
@@ -66,7 +66,9 @@ export default function CreatePostPage() {
                         />
                     </div>
 
-                    <button className="bg-blue-600 text-white py-2 px-3 hover:bg-blue-700 rounded transition cursor-pointer">Publicar</button>
+                    {/* <button className="bg-blue-600 text-white py-2 px-3 hover:bg-blue-700 rounded transition cursor-pointer">Publicar</button> */}
+                    <Button variant={"outline"} className="cursor-pointer">Publicar</Button>
+
 
                     {ResponseData && (
                         <div className="mt-6 border border-green-500 bg-green-100">
