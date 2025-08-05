@@ -8,5 +8,6 @@ const nextConfig: NextConfig = {
         hostname: 'cdn-icons-png.flaticon.com',
       },
     ],
-  }  
+  }
+} 
 module.exports = nextConfig;
