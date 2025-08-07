@@ -1,10 +1,8 @@
-import Counter from "@/components/Counter";
+import LikeButton from "@/components/LikeButton";
 
 export default function About(){
 
     return(
-        <div>
-            <Counter count={10}/>
-        </div>
+        <LikeButton/>
     )
 }
