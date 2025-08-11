@@ -19,7 +19,7 @@ export default function LikeButton() {
         <h2 className="text-3xl font-semibold mb-8 text-gray-800 text-center select-none">CONTADOR DE LIKES</h2>
 
         <div className="flex items-center"> 
-          <Image
+          <Image    
             src={'https://cdn-icons-png.flaticon.com/512/833/833472.png'}
             alt="Coração"
             width={60}
