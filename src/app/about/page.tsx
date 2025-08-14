@@ -1,8 +1,8 @@
-import LikeButton from "@/components/LikeButton";
+import MiniDisplay from "@/components/MiniDisplay";
 
 export default function About(){
 
     return(
-        <LikeButton/>
+        <MiniDisplay/>
     )
 }
