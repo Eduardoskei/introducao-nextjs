@@ -1,60 +1,191 @@
-'use client'
+"use client";
+import { useState } from "react";
 
-import { useEffect, useState } from "react"
+export default function Calculadora() {
+  const [display, setDisplay] = useState("");
+  const backspace = () => {
+    setDisplay(display.slice(0, -1));
+  };
 
-export default function Calculator() {
-  
-  const [display, setDisplay] = useState('');
-
-  useEffect(() => {
-    if (display.length >= 15) {
-      setDisplay(display.slice(0, -1))
+  const sun = () => {
+    const values = display.split("+");
+    const result = values.reduce(
+      (acumuladora, valorAtual) => acumuladora + Number(valorAtual),
+      0
+    );
+    setDisplay(String(result));
+  };
+  const subtraction = () => {
+    const values = display.split("-");
+    const numberValues = values.map((value) => Number(value));
+    const result = numberValues.reduce(
+      (acumuladora, valorAtual) => acumuladora - valorAtual
+    );
+    setDisplay(String(result));
+  };
+  const product = () => {
+    const values = display.split("*");
+    const numberValues = values.map((value) => Number(value));
+    const result = numberValues.reduce(
+      (acumuladora, valorAtual) => acumuladora * valorAtual
+    );
+    setDisplay(String(result));
+  };
+  const division = () => {
+    const values = display.split("/");
+    const numberValues = values.map((value) => Number(value));
+    const result = numberValues.reduce(
+      (acumuladora, valorAtual) => acumuladora / valorAtual
+    );
+    setDisplay(String(result));
+    if (numberValues.includes(0)) {
+      alert("Divisão por zero não é permitida");
+      setDisplay("");
     }
-  })
+  };
 
-  const handleClicker = (value: string | number) => {
-     if (typeof value === 'number') {
-      setDisplay(display + value);
-    } else if (value === 'C') {
-      setDisplay('');
-    } else if (value === '+' || value === '-' || value === '*' || value === '/') {
-      setDisplay(display + value);
-    } else if (value === '=') {
-      if (display[0] === '0') {
-        const safeDisplay = display.replace(/^0+(\d)/, '$1');
-        setDisplay(eval(safeDisplay))
-      }else setDisplay(eval(display))
+  const calculate = () => {
+    if (display.includes("+")) {
+      sun();
+    } else if (display.includes("-")) {
+      subtraction();
+    } else if (display.includes("*")) {
+      product();
+    } else if (display.includes("/")) {
+      division();
+    } else {
+      alert("Operação inválida");
     }
-  }
+  };
 
   return (
-    <div className="flex flex-col items-center mt-10">
-      <div className="bg-gray-400 p-5 rounded-md">
-        <div className="border border-gray-400 rounded-sm bg-cyan-300 p-4 h-15 w-60 text-end text-xl">
-          {display}
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-700 via-indigo-700 to-blue-700">
+      <div className="flex flex-col items-center justify-center w-[400px] h-[550px] bg-gray-900 rounded-3xl shadow-2xl p-6">
+        {/* Display */}
+        <div className="w-full bg-gray-800 rounded-xl shadow-inner text-white text-3xl font-mono text-right p-4 mb-6 overflow-x-auto">
+          {display || "0"}
         </div>
 
-        <div className="grid grid-cols-4 gap-6 mt-6">
-            <button onClick={() => handleClicker(7)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">7</button>
-            <button onClick={() => handleClicker(8)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">8</button>
-            <button onClick={() => handleClicker(9)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">9</button>
-            <button onClick={() => handleClicker('/')} className="bg-green-400 text-black p-2 cursor-pointer hover:bg-green-500 transition text-3xl">÷</button>
-            <button onClick={() => handleClicker(4)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">4</button>
-            <button onClick={() => handleClicker(5)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">5</button>
-            <button onClick={() => handleClicker(6)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">6</button>
-            <button onClick={() => handleClicker('*')} className="bg-green-400 text-black p-2 cursor-pointer hover:bg-green-500 transition text-3xl">x</button>
-            <button onClick={() => handleClicker(1)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">1</button>
-            <button onClick={() => handleClicker(2)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">2</button>
-            <button onClick={() => handleClicker(3)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">3</button>
-            <button onClick={() => handleClicker('-')} className="bg-green-400 text-black p-2 cursor-pointer hover:bg-green-500 transition text-3xl">-</button>
-            <button onClick={() => handleClicker(0)} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">0</button>
-            <button onClick={() => handleClicker('C')} className="bg-white text-black p-2 cursor-pointer hover:bg-gray-300 transition text-3xl">C</button>
-            <button onClick={() => handleClicker('+')} className="bg-green-400 text-black p-2 cursor-pointer hover:bg-green-500 transition text-3xl">+</button>
-            <button onClick={() => handleClicker('=')} className="bg-orange-400 text-black p-2 cursor-pointer hover:bg-orange-500 transition text-3xl">=</button>
+        {/* Botões */}
+        <div className="grid grid-cols-4 gap-4 w-full">
+          {/* Primeira linha */}
+          {["7","8","9","/"].map((val, idx) => (
+            <button
+              key={val}
+              className={`p-4 rounded-xl text-white font-bold text-xl shadow-md transition-transform transform active:scale-95 ${
+                val === "/" ? "bg-orange-500 hover:bg-orange-400" : "bg-gray-700 hover:bg-gray-600"
+              }`}
+              onClick={() => {
+                if ("0123456789".includes(val)) setDisplay(display + val);
+                else {
+                  if (
+                    display !== "" &&
+                    !display.includes("-") &&
+                    !display.includes("*") &&
+                    !display.includes("+") &&
+                    !["+", "-", "*", "/"].includes(display[display.length - 1])
+                  ) setDisplay(display + val);
+                }
+              }}
+            >
+              {val}
+            </button>
+          ))}
+
+          {/* Segunda linha */}
+          {["4","5","6","*"].map((val) => (
+            <button
+              key={val}
+              className={`p-4 rounded-xl text-white font-bold text-xl shadow-md transition-transform transform active:scale-95 ${
+                val === "*" ? "bg-orange-500 hover:bg-orange-400" : "bg-gray-700 hover:bg-gray-600"
+              }`}
+              onClick={() => {
+                if ("0123456789".includes(val)) setDisplay(display + val);
+                else {
+                  if (
+                    display !== "" &&
+                    !display.includes("-") &&
+                    !display.includes("+") &&
+                    !display.includes("/")
+                  ) {
+                    if (!["+", "-", "*", "/"].includes(display[display.length - 1]))
+                      setDisplay(display + val);
+                  }
+                }
+              }}
+            >
+              {val}
+            </button>
+          ))}
+
+          {/* Terceira linha */}
+          {["1","2","3","-"].map((val) => (
+            <button
+              key={val}
+              className={`p-4 rounded-xl text-white font-bold text-xl shadow-md transition-transform transform active:scale-95 ${
+                val === "-" ? "bg-orange-500 hover:bg-orange-400" : "bg-gray-700 hover:bg-gray-600"
+              }`}
+              onClick={() => {
+                if ("0123456789".includes(val)) setDisplay(display + val);
+                else {
+                  if (
+                    display !== "" &&
+                    !display.includes("+") &&
+                    !display.includes("*") &&
+                    !display.includes("/")
+                  ) {
+                    if (!["+", "-", "*", "/"].includes(display[display.length - 1]))
+                      setDisplay(display + val);
+                  }
+                }
+              }}
+            >
+              {val}
+            </button>
+          ))}
+
+          {/* Quarta linha */}
+          <button
+            className="p-4 rounded-xl text-white font-bold text-xl shadow-md bg-red-500 hover:bg-red-400 transition-transform transform active:scale-95"
+            onClick={() => setDisplay("")}
+          >
+            C
+          </button>
+          <button
+            className="p-4 rounded-xl text-white font-bold text-xl shadow-md bg-gray-700 hover:bg-gray-600 transition-transform transform active:scale-95"
+            onClick={() => setDisplay(display + "0")}
+          >
+            0
+          </button>
+          <button
+            className="p-4 rounded-xl text-white font-bold text-xl shadow-md bg-gray-700 hover:bg-gray-600 transition-transform transform active:scale-95"
+            onClick={backspace}
+          >
+            ←
+          </button>
+          <button
+            className="p-4 rounded-xl text-white font-bold text-xl shadow-md bg-orange-500 hover:bg-orange-400 transition-transform transform active:scale-95"
+            onClick={() => {
+              if (
+                display !== "" &&
+                !display.includes("-") &&
+                !display.includes("*") &&
+                !display.includes("/")
+              ) {
+                if (!["+", "-", "*", "/"].includes(display[display.length - 1]))
+                  setDisplay(display + "+");
+              }
+            }}> + </button>
+
+          {/* Botão igual */}
+          <button
+            onClick={calculate}
+            className="col-span-4 p-4 rounded-xl bg-green-500 hover:bg-green-400 text-white font-bold text-2xl shadow-lg transition-transform transform active:scale-95 mt-4"
+          >
+            =
+          </button>
         </div>
-        
       </div>
     </div>
-
-  )
+  );
 }
