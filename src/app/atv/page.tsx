@@ -1,7 +1,8 @@
-import Calculator from "@/components/Calculator";
+import BotaoReproducao from "@/components/BotaoReproducao";
+
 
 export default function atv() {
     return (
-      <Calculator/>
+      <BotaoReproducao/>
     )  
 }
