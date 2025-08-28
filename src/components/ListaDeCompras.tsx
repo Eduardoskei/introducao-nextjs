@@ -21,7 +21,7 @@ export default function ListaDeCompras() {
   const handleClicker = (index: number) => {
     setCart(cart.map((cartItem, itemIndex) => itemIndex === index ? {...cartItem, purchased: !cartItem.purchased} : cartItem))
   }
-
+  
   return (
     <div className="flex flex-col items-center mt-8">
       <h1 className="text-2xl font-bold mb-6">Lista de Compras</h1>
