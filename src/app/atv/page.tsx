@@ -1,7 +1,7 @@
-import ListaDeCompras from "@/components/ListaDeCompras";
+import FeedPage from "@/components/ComponentsATV/FeedPage";
 
 export default function atv() {
     return (
-      <ListaDeCompras/>
+      <FeedPage/>
     )  
 }
